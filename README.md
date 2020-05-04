@@ -1,4 +1,10 @@
 # Extract / Transform / Load
 ## Challenge Summary
 
-For this challenge, 
+In creating this automated data pipeline, several assumptions have to be made. For a variety of reasons, the data that ends up in the sql database will not include the entire dataset from the csv and json resources.
+
+While we successfully imported all the data from the ratings csv into the database (over 26 million rows), this might not always be the case. It's possible that future datasets may have incomplete or corrupted data points, which will have to be excluded from the final database.
+
+As for the wikipedia and kaggle data, there are several points in the process of transformation where certain movie data will be dropped and excluded from the endpoint database. For example, we did not include every possible language when filtering for alternate titles. A future dataset could include values in a column titled "Portuguese" and our function was not written to handle that. Another point of possibly lost data would be our numerical parameters for budget and box office data. There could be indie movies with lower budget and box office values, for example in the tens or hundreds of thousands. If this data were written out in a string format, including the word "thousands", they would be excluded from the sql databse.
+
+When merging the wikipedia and kaggle data, there were several duplicate columns we decided to drop from the wiki resource. With a little research, we decided the kaggle data was more consistent in the columns of title, release date, lanuage and production companies. While this was true for this most recent dataset, its possible that future csvs and json files might include not as consistent data, or data where the wikipedia information is more consistent. While the differences in the title columns were not too great, the release date column is another story. We use explatory anylsis to conclude the kaggle data was the best choice, but even the explatory ananlysis was limited in parameters. If future datasets include a variety of different date formats, the wikipedia data may be a better option.
